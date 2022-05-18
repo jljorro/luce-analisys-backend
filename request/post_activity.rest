@@ -1,0 +1,18 @@
+POST http://localhost:3001/activities
+Content-Type: application/json
+
+{
+    "name": "Otro taller chulo",
+    "description": "sakjhid kjshiudh jkshduhis",
+    "faculty": "F. de Psicología"
+}
+
+###
+
+POST http://localhost:3001/activities
+Content-Type: application/json
+
+{
+    "description": "sakjhid kjshiudh jkshduhis",
+    "faculty": "F. de Psicología"
+}
