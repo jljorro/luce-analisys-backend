@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
-app.use(cors) // Para evitar error CORS
+app.use(cors()) // Para evitar error CORS
 app.use(express.json())
 
 let activites = [
