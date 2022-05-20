@@ -10,6 +10,12 @@ studentsRouters.post('/', async (request, response, next) => {
   const { body } = request
   const { name, email, age, currentPostcode, familyPostcode, gender, study, currentCourse } = body
 
+  if (!body) {
+    return response.status(404).json({
+      error: 'activity is missing'
+    })
+  }
+
   const student = new Student({
     name,
     email,
@@ -19,7 +25,7 @@ studentsRouters.post('/', async (request, response, next) => {
     gender,
     study,
     currentCourse,
-    activities: []
+    activities: [] // TODO: Esta información se deberá de extraer del sistema de blockchain
   })
 
   try {

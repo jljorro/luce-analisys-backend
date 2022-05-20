@@ -56,19 +56,21 @@ activitiesRouters.delete('/:id', (request, response, next) => {
    * por el cuerpo.
    */
 activitiesRouters.post('/', async (request, response, next) => {
-  const activity = request.body
+  const { body } = request
+  const { name, description, faculty } = body
 
-  if (!activity.name) {
+  if (!body) {
     return response.status(404).json({
       error: 'activity is missing'
     })
   }
 
   const newActivity = new Activity({
-    name: activity.name,
-    description: activity.description,
-    faculty: activity.faculty,
-    date: new Date()
+    name,
+    description,
+    faculty,
+    date: new Date(),
+    students: []
   })
 
   try {
