@@ -5,8 +5,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
-const Activity = require('./models/Activity')
-const { default: mongoose } = require('mongoose')
+const activitiesRouter = require('./controllers/activities')
+const studentsRouter = require('./controllers/students')
 
 app.use(cors()) // Para evitar error CORS
 app.use(express.json())
@@ -16,94 +16,12 @@ app.get('/', (reques, response) => {
 })
 
 /**
- * Devuelve todas las actividades.
+ * Entradas de la API:
+ * - /activities: gestión de las actividades incluidas en LUCE
+ * - /students: getsión de los estudiantes incluidos en LUCE
  */
-app.get('/activities', (request, response) => {
-  Activity.find({})
-    .then(activities => {
-      response.json(activities)
-      mongoose.connection.close()
-    }).catch(err => {
-      console.log(err)
-      mongoose.connection.close()
-    })
-})
-
-/**
- * Devuelve la información de una actividad a partir de
- * su identificador de actividad.
- */
-app.get('/activities/:id', (request, response, next) => {
-  const { id } = request.params
-
-  Activity.findById(id).then(activity => {
-    if (activity) {
-      return response.json(activity)
-    } else {
-      response.status(404).end()
-    }
-  }).catch(err => {
-    next(err)
-  })
-})
-
-/**
- * Elimina una actividad del registro a partir de
- * su identificador de actividad.
- */
-app.delete('/activities/:id', (request, response, next) => {
-  const { id } = request.params
-
-  Activity.findByIdAndDelete(id)
-    .then(result => {
-      response.status(204).end()
-    }).catch(error => next(error))
-})
-
-/**
- * Crea una nueva actividad con la información enviada
- * por el cuerpo.
- */
-app.post('/activities', (request, response) => {
-  const activity = request.body
-
-  if (!activity.name) {
-    return response.status(404).json({
-      error: 'activity is missing'
-    })
-  }
-
-  const newActivity = new Activity({
-    name: activity.name,
-    description: activity.description,
-    faculty: activity.faculty,
-    date: new Date()
-  })
-
-  newActivity.save().then(savedActivity => {
-    response.status(201).json(savedActivity)
-  })
-})
-
-/**
- * Servicio que nos permite modificar los campos
- * de una actividad a partir de su id.
- */
-app.put('/activities', (request, response, next) => {
-  const { id } = request.params
-  const activity = request.body
-
-  const activityNewContent = {
-    name: activity.name,
-    description: activity.description,
-    faculty: activity.faculty
-  }
-
-  Activity.findByIdAndUpdate(id, activityNewContent)
-    .then(savedActivity => {
-      response.status(201).json(savedActivity)
-    }).catch(error => next(error))
-})
+app.use('/activities', activitiesRouter)
+app.use('/students', studentsRouter)
 
 /**
  * Middleware para mostrar un error 404 cuando buscamos
