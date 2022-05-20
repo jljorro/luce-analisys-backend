@@ -5,7 +5,11 @@ const activitySchema = new Schema({
   name: String,
   description: String,
   faculty: String,
-  date: Date
+  date: Date,
+  students: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Student'
+  }]
 })
 
 activitySchema.set('toJSON', {
