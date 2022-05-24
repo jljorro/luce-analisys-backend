@@ -12,8 +12,6 @@ activitiesRouters.get('/', async (request, response, next) => {
     response.json(activities)
   } catch (error) {
     next(error)
-  } finally {
-    mongoose.connection.close()
   }
 })
 
@@ -29,8 +27,6 @@ activitiesRouters.get('/:id', async (request, response, next) => {
     response.json(activity)
   } catch (error) {
     next(error)
-  } finally {
-    mongoose.connection.close()
   }
 })
 
@@ -46,8 +42,6 @@ activitiesRouters.delete('/:id', (request, response, next) => {
     response.status(204).end()
   } catch (error) {
     next(error)
-  } finally {
-    mongoose.connection.close()
   }
 })
 
@@ -55,7 +49,7 @@ activitiesRouters.delete('/:id', (request, response, next) => {
    * Crea una nueva actividad con la información enviada
    * por el cuerpo.
    */
-activitiesRouters.post('/:id', async (request, response, next) => {
+activitiesRouters.post('/', async (request, response, next) => {
   const { body } = request
   const { name, description, faculty } = body
 
@@ -78,8 +72,6 @@ activitiesRouters.post('/:id', async (request, response, next) => {
     response.status(201).json(savedActivity)
   } catch (error) {
     next(error)
-  } finally {
-    mongoose.connection.close()
   }
 })
 
@@ -102,8 +94,6 @@ activitiesRouters.put('/:id', async (request, response, next) => {
     response.status(201).json(savedActivity)
   } catch (error) {
     next(error)
-  } finally {
-    mongoose.connection.close()
   }
 })
 
