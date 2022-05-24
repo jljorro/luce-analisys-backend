@@ -55,7 +55,7 @@ activitiesRouters.delete('/:id', (request, response, next) => {
    * Crea una nueva actividad con la información enviada
    * por el cuerpo.
    */
-activitiesRouters.post('/', async (request, response, next) => {
+activitiesRouters.post('/:id', async (request, response, next) => {
   const { body } = request
   const { name, description, faculty } = body
 
@@ -87,7 +87,7 @@ activitiesRouters.post('/', async (request, response, next) => {
    * Servicio que nos permite modificar los campos
    * de una actividad a partir de su id.
    */
-activitiesRouters.put('/', async (request, response, next) => {
+activitiesRouters.put('/:id', async (request, response, next) => {
   const { id } = request.params
   const activity = request.body
 

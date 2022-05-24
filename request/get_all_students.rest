@@ -1,0 +1,1 @@
+GET http://localhost:3001/students/6287689412e9b4dd411a5c49
